@@ -1,0 +1,12 @@
+{
+  "name": "react-native-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "web": "npm run web --prefix my-react-native/frontend",
+    "android": "npm run android --prefix my-react-native/frontend",
+    "ios": "npm run ios --prefix my-react-native/frontend",
+    "start": "npm start --prefix my-react-native/frontend",
+    "install:all": "npm install --prefix my-react-native/frontend"
+  }
+}
