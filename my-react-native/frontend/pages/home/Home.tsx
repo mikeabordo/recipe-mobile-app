@@ -1,32 +1,90 @@
+import React, { useState } from "react";
 import { Text, View, ScrollView, TextInput } from "react-native";
 import { globalStyles } from "../../style/global";
 import { Ionicons } from "@expo/vector-icons";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 
+const CategoryList = ({
+  categories,
+  onSelectCategory,
+  activeCategory,
+}: {
+  categories: { title: string }[];
+  onSelectCategory: (category: string) => void;
+  activeCategory: string;
+}) => (
+  <View className="flex-row gap-2 ">
+    {categories.map((category, index) => {
+      const isActive = activeCategory === category.title;
+      return (
+        <View key={index} className="flex items-center">
+          <Button
+            title={category.title}
+            onPress={() => onSelectCategory(category.title)}
+            className={isActive ? "bg-teal-600 border-teal-500" : ""}
+            textClassName={isActive ? "text-white font-bold" : ""}
+          />
+        </View>
+      );
+    })}
+  </View>
+);
+
 export default function Home() {
   const categories = [
+    { title: "All" },
+    { title: "Breakfast" },
+    { title: "Lunch" },
+    { title: "Dinner" },
+    { title: "Dessert" },
+  ];
+
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const popularRecipes = [
     {
-      title: "All",
-      icon: "",
+      id: 1,
+      title: "Spaghetti carbonara",
+      time: "25 min",
+      category: "Breakfast",
+      rating: "4.5",
+      badge: "Italian",
+      image: require("../../assets/images/sample-food.jpg"),
     },
     {
-      title: "Breakfast",
-      icon: "",
+      id: 2,
+      title: "Meatball sandwich",
+      time: "25 min",
+      category: "Lunch",
+      rating: "4.5",
+      badge: "Italian",
+      image: require("../../assets/images/sample-food.jpg"),
     },
     {
-      title: "Lunch",
-      icon: "",
+      id: 3,
+      title: "Chicken noodle soup",
+      time: "25 min",
+      category: "Dinner",
+      rating: "4.5",
+      badge: "Italian",
+      image: require("../../assets/images/sample-food.jpg"),
     },
     {
-      title: "Dinner",
-      icon: "",
-    },
-    {
-      title: "Dessert",
-      icon: "",
+      id: 4,
+      title: "Chocolate lava cake",
+      time: "25 min",
+      category: "Dessert",
+      rating: "4.5",
+      badge: "Italian",
+      image: require("../../assets/images/sample-food.jpg"),
     },
   ];
+
+  const filteredRecipes =
+    activeCategory === "All"
+      ? popularRecipes
+      : popularRecipes.filter((r) => r.category === activeCategory);
 
   return (
     <ScrollView style={globalStyles.container}>
@@ -45,13 +103,11 @@ export default function Home() {
         <View className="border border-slate-400 h-0.5 w-full" />
 
         {/* Category List */}
-        <View className="flex-row gap-2 ">
-          {categories.map((category, index) => (
-            <View key={index} className="flex items-center">
-              <Button title={category.title} />
-            </View>
-          ))}
-        </View>
+        <CategoryList
+          categories={categories}
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
+        />
         {/* Feature Recipe */}
         <View>
           <Text style={globalStyles.subtitle} className="mb-4">
@@ -79,126 +135,46 @@ export default function Home() {
             Popular Recipe
           </Text>
           <View className="flex-row flex-wrap justify-between">
-            <View className="w-[48%] mb-4">
-              <Card.Touchable>
-                <Card.Image
-                  source={require("../../assets/images/sample-food.jpg")}
-                  className="h-40 w-full"
-                  style={{ width: "100%" }}
-                  resizeMode="cover"
-                />
-                <Card.Content className="p-3">
-                  <Card.Title className="text-lg">
-                    Spaghetti carbonara
-                  </Card.Title>
-                  <Card.Footer className="mt-2">
-                    <Card.Description>25 min • Lunch</Card.Description>
-                    <Card.StarRating>
-                      <Ionicons name="star" size={12} color="#f59e0b" />
-                      <Text className="text-slate-400 text-xs font-medium">
-                        4.5
-                      </Text>
-                    </Card.StarRating>
-                    <Card.Badge
-                      textClassName="text-teal-800"
-                      className="px-2 py-0.5"
-                    >
-                      Italian
-                    </Card.Badge>
-                  </Card.Footer>
-                </Card.Content>
-              </Card.Touchable>
-            </View>
-            <View className="w-[48%] mb-4">
-              <Card.Touchable>
-                <Card.Image
-                  source={require("../../assets/images/sample-food.jpg")}
-                  className="h-40 w-full"
-                  style={{ width: "100%" }}
-                  resizeMode="cover"
-                />
-                <Card.Content className="p-3">
-                  <Card.Title className="text-lg">
-                    Spaghetti carbonara
-                  </Card.Title>
-                  <Card.Footer className="mt-2">
-                    <Card.Description>25 min • Lunch</Card.Description>
-                    <Card.StarRating>
-                      <Ionicons name="star" size={12} color="#f59e0b" />
-                      <Text className="text-slate-400 text-xs font-medium">
-                        4.5
-                      </Text>
-                    </Card.StarRating>
-                    <Card.Badge
-                      textClassName="text-teal-800"
-                      className="px-2 py-0.5"
-                    >
-                      Italian
-                    </Card.Badge>
-                  </Card.Footer>
-                </Card.Content>
-              </Card.Touchable>
-            </View>
-            <View className="w-[48%] mb-4">
-              <Card.Touchable>
-                <Card.Image
-                  source={require("../../assets/images/sample-food.jpg")}
-                  className="h-40 w-full"
-                  style={{ width: "100%" }}
-                  resizeMode="cover"
-                />
-                <Card.Content className="p-3">
-                  <Card.Title className="text-lg">
-                    Spaghetti carbonara
-                  </Card.Title>
-                  <Card.Footer className="mt-2">
-                    <Card.Description>25 min • Dinner</Card.Description>
-                    <Card.StarRating>
-                      <Ionicons name="star" size={12} color="#f59e0b" />
-                      <Text className="text-slate-400 text-xs font-medium">
-                        4.5
-                      </Text>
-                    </Card.StarRating>
-                    <Card.Badge
-                      textClassName="text-teal-800"
-                      className="px-2 py-0.5"
-                    >
-                      Italian
-                    </Card.Badge>
-                  </Card.Footer>
-                </Card.Content>
-              </Card.Touchable>
-            </View>
-            <View className="w-[48%] mb-4">
-              <Card.Touchable>
-                <Card.Image
-                  source={require("../../assets/images/sample-food.jpg")}
-                  className="h-40 w-full"
-                  style={{ width: "100%" }}
-                  resizeMode="cover"
-                />
-                <Card.Content className="p-3">
-                  <Card.Title className="text-lg">
-                    Spaghetti carbonara
-                  </Card.Title>
-                  <Card.Footer className="mt-2">
-                    <Card.Description>25 min • Dinner</Card.Description>
-                    <Card.StarRating>
-                      <Ionicons name="star" size={12} color="#f59e0b" />
-                      <Text className="text-slate-400 text-xs font-medium">
-                        4.5
-                      </Text>
-                    </Card.StarRating>
-                    <Card.Badge
-                      textClassName="text-teal-800"
-                      className="px-2 py-0.5"
-                    >
-                      Italian
-                    </Card.Badge>
-                  </Card.Footer>
-                </Card.Content>
-              </Card.Touchable>
-            </View>
+            {filteredRecipes.length > 0 ? (
+              filteredRecipes.map((recipe) => (
+                <View key={recipe.id} className="w-[48%] mb-4">
+                  <Card.Touchable>
+                    <Card.Image
+                      source={recipe.image}
+                      className="h-40 w-full"
+                      style={{ width: "100%" }}
+                      resizeMode="cover"
+                    />
+                    <Card.Content className="p-3">
+                      <Card.Title className="text-lg">
+                        {recipe.title}
+                      </Card.Title>
+                      <Card.Footer className="mt-2">
+                        <Card.Description>
+                          {recipe.time} • {recipe.category}
+                        </Card.Description>
+                        <Card.StarRating>
+                          <Ionicons name="star" size={12} color="#f59e0b" />
+                          <Text className="text-slate-400 text-xs font-medium">
+                            {recipe.rating}
+                          </Text>
+                        </Card.StarRating>
+                        <Card.Badge
+                          textClassName="text-teal-800"
+                          className="px-2 py-0.5"
+                        >
+                          {recipe.badge}
+                        </Card.Badge>
+                      </Card.Footer>
+                    </Card.Content>
+                  </Card.Touchable>
+                </View>
+              ))
+            ) : (
+              <Text className="text-slate-400 mt-4 mx-auto">
+                No recipes found for this category.
+              </Text>
+            )}
           </View>
         </View>
       </View>
