@@ -10,18 +10,18 @@ const CategoryList = ({
   onSelectCategory,
   activeCategory,
 }: {
-  categories: { title: string }[];
+  categories: { name: string }[];
   onSelectCategory: (category: string) => void;
   activeCategory: string;
 }) => (
   <View className="flex-row gap-2 ">
     {categories.map((category, index) => {
-      const isActive = activeCategory === category.title;
+      const isActive = activeCategory === category.name;
       return (
         <View key={index} className="flex items-center">
           <Button
-            title={category.title}
-            onPress={() => onSelectCategory(category.title)}
+            title={category.name}
+            onPress={() => onSelectCategory(category.name)}
             className={isActive ? "bg-teal-600 border-teal-500" : ""}
             textClassName={isActive ? "text-white font-bold" : ""}
           />
@@ -31,23 +31,31 @@ const CategoryList = ({
   </View>
 );
 
+const RECIPE_CATEGORIES = {
+  ALL: "All",
+  BREAKFAST: "Breakfast",
+  LUNCH: "Lunch",
+  DINNER: "Dinner",
+  DESSERT: "Dessert",
+};
+
 export default function Home() {
   const categories = [
-    { title: "All" },
-    { title: "Breakfast" },
-    { title: "Lunch" },
-    { title: "Dinner" },
-    { title: "Dessert" },
+    { name: RECIPE_CATEGORIES.ALL },
+    { name: RECIPE_CATEGORIES.BREAKFAST },
+    { name: RECIPE_CATEGORIES.LUNCH },
+    { name: RECIPE_CATEGORIES.DINNER },
+    { name: RECIPE_CATEGORIES.DESSERT },
   ];
 
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState(RECIPE_CATEGORIES.ALL);
 
   const popularRecipes = [
     {
       id: 1,
       title: "Spaghetti carbonara",
       time: "25 min",
-      category: "Breakfast",
+      category: RECIPE_CATEGORIES.BREAKFAST,
       rating: "4.5",
       badge: "Italian",
       image: require("../../assets/images/sample-food.jpg"),
@@ -56,7 +64,7 @@ export default function Home() {
       id: 2,
       title: "Meatball sandwich",
       time: "25 min",
-      category: "Lunch",
+      category: RECIPE_CATEGORIES.LUNCH,
       rating: "4.5",
       badge: "Italian",
       image: require("../../assets/images/sample-food.jpg"),
@@ -65,7 +73,7 @@ export default function Home() {
       id: 3,
       title: "Chicken noodle soup",
       time: "25 min",
-      category: "Dinner",
+      category: RECIPE_CATEGORIES.DINNER,
       rating: "4.5",
       badge: "Italian",
       image: require("../../assets/images/sample-food.jpg"),
@@ -74,7 +82,7 @@ export default function Home() {
       id: 4,
       title: "Chocolate lava cake",
       time: "25 min",
-      category: "Dessert",
+      category: RECIPE_CATEGORIES.DESSERT,
       rating: "4.5",
       badge: "Italian",
       image: require("../../assets/images/sample-food.jpg"),
@@ -82,7 +90,7 @@ export default function Home() {
   ];
 
   const filteredRecipes =
-    activeCategory === "All"
+    activeCategory === RECIPE_CATEGORIES.ALL
       ? popularRecipes
       : popularRecipes.filter((r) => r.category === activeCategory);
 
@@ -102,12 +110,6 @@ export default function Home() {
         {/* Separator */}
         <View className="border border-slate-400 h-0.5 w-full" />
 
-        {/* Category List */}
-        <CategoryList
-          categories={categories}
-          activeCategory={activeCategory}
-          onSelectCategory={setActiveCategory}
-        />
         {/* Feature Recipe */}
         <View>
           <Text style={globalStyles.subtitle} className="mb-4">
@@ -129,6 +131,12 @@ export default function Home() {
             </Card.Content>
           </Card.Touchable>
         </View>
+        {/* Category List */}
+        <CategoryList
+          categories={categories}
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
+        />
         {/* Popular Recipe */}
         <View>
           <Text style={globalStyles.subtitle} className="mb-4">

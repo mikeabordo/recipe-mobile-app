@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Supabase requires directUrl for migrations
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  name         String
+  passwordHash String     @map("password_hash")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  favorites    Favorite[]
+
+  @@map("users")
+}
+
+model Favorite {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  recipeId   Int      @map("recipe_id")    // Spoonacular recipe ID (integer)
+  recipeTitle String  @map("recipe_title") // Cached title to avoid re-fetching
+  recipeImage String? @map("recipe_image") // Cached image URL
+  savedAt    DateTime @default(now()) @map("saved_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId]) // A user can only save a recipe once
+  @@map("favorites")
+}
