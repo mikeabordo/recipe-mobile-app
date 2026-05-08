@@ -10,6 +10,7 @@ import {
   PressableProps,
 } from "react-native";
 import { Link } from "expo-router";
+import { Fonts } from "../style/global";
 
 interface CardProps extends ViewProps {
   children: React.ReactNode;
@@ -113,8 +114,8 @@ const CardTitle = ({
 }: CardTitleProps) => {
   return (
     <Text
-      style={style}
-      className={`text-slate-100 text-xl font-bold tracking-tight mb-1 ${className}`}
+      style={[{ fontFamily: Fonts.semibold }, style]}
+      className={`text-slate-100 text-xl tracking-tight mb-1 ${className}`}
       {...props}
     >
       {children}
@@ -134,7 +135,7 @@ const CardDescription = ({
 }: CardDescriptionProps) => {
   return (
     <Text
-      style={style}
+      style={[{ fontFamily: Fonts.body }, style]}
       className={`text-slate-400 text-sm leading-relaxed ${className}`}
       {...props}
     >
@@ -183,7 +184,10 @@ const CardBadge = ({
       className={`bg-teal-100/90 px-3 py-1 rounded-full ${className}`}
       {...props}
     >
-      <Text className={`text-teal-900 text-xs font-medium ${textClassName}`}>
+      <Text
+        style={{ fontFamily: Fonts.bold }}
+        className={`text-teal-900 text-xs font-medium ${textClassName}`}
+      >
         {children}
       </Text>
     </View>
@@ -210,8 +214,6 @@ const CardStarRating = ({
     </View>
   );
 };
-
-
 
 // Use a compound component pattern for maximum reusability
 export const Card = Object.assign(CardRoot, {

@@ -96,7 +96,7 @@ export default function Home() {
 
   return (
     <ScrollView style={globalStyles.container}>
-      <View className="border border-slate-400 px-4 py-2 gap-4 rounded-md bg-slate-900/20">
+      <View className="border border-slate-600 px-4 py-2 gap-4 rounded-md bg-slate-900/20">
         <Text style={[globalStyles.title]}>Recipes</Text>
         {/* Search Field */}
         <View className="flex-row items-center border border-gray-500 rounded-xl px-2 py-1.5 focus-within:border-slate-300">
@@ -161,7 +161,7 @@ export default function Home() {
                         <Card.Description>
                           {recipe.time} • {recipe.category}
                         </Card.Description>
-                        <Card.StarRating>
+                        <Card.StarRating className="ml-20">
                           <Ionicons name="star" size={12} color="#f59e0b" />
                           <Text className="text-slate-400 text-xs font-medium">
                             {recipe.rating}
