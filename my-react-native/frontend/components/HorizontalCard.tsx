@@ -18,15 +18,17 @@ import { Fonts } from "../style/global";
 interface HorizontalCardRootProps extends ViewProps {
   children: React.ReactNode;
   className?: string;
+  href?: any;
 }
 
 const HorizontalCardRoot = ({
   children,
   className = "",
   style,
+  href,
   ...props
 }: HorizontalCardRootProps) => {
-  return (
+  const content = (
     <View
       style={style}
       className={`bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden shadow-md shadow-black/30 flex-row items-center ${className}`}
@@ -35,6 +37,16 @@ const HorizontalCardRoot = ({
       {children}
     </View>
   );
+
+  if (href) {
+    return (
+      <Link href={href} asChild>
+        <Pressable>{content}</Pressable>
+      </Link>
+    );
+  }
+
+  return content;
 };
 
 // ─── Touchable Root ───────────────────────────────────────────────────────────
@@ -259,6 +271,7 @@ const HorizontalCardFavorite = ({
       onPress={(e) => {
         // Prevent event bubbling on Web so the outer card isn't triggered
         e?.stopPropagation?.();
+        e?.preventDefault?.();
         onPress?.(e);
       }}
       className={`p-3 active:scale-90 z-10 ${className}`}
@@ -267,7 +280,7 @@ const HorizontalCardFavorite = ({
       <Ionicons
         name={isFavorite ? "heart" : "heart-outline"}
         size={28}
-        color={isFavorite ? "#f43f5e" : "#64748b"}
+        color={isFavorite ? "#f1677eff" : "#64748b"}
       />
     </Pressable>
   );

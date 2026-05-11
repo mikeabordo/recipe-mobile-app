@@ -38,14 +38,7 @@ export default function FullDetailsCard({ recipe }: FullDetailsCardProps) {
       style={globalStyles.container}
       showsVerticalScrollIndicator={false}
     >
-      {/* Back Button */}
-      <TouchableOpacity
-        onPress={() => router.back()}
-        className="flex-row items-center gap-2 mb-4"
-      >
-        <Ionicons name="arrow-back" size={20} color="#94a3b8" />
-        <Text className="text-slate-400 text-sm font-medium mb-0.5">Back</Text>
-      </TouchableOpacity>
+
 
       {/* Hero Image */}
       <View className="rounded-3xl overflow-hidden mb-5 border border-slate-700/80">

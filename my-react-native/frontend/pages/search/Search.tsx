@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput } from "react-native";
+import { View, Text, ScrollView, TextInput, Pressable } from "react-native";
 import { globalStyles } from "../../style/global";
 import { Ionicons } from "@expo/vector-icons";
 import { Card } from "@/components/Card";
@@ -53,6 +53,16 @@ export default function Search() {
     },
   ];
 
+  const trendingFoods = ["Pizza", "Pasta", "Salad", "Soup"];
+  const [TrendingFoodsSelected, setTrendingFoodsSelected] = useState<
+    string | null
+  >(null);
+
+  const trendingTimes = ["20-min meals", "30-min meals"];
+  const [TrendingTimeSelected, setTrendingTimeSelected] = useState<
+    string | null
+  >(null);
+
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   const toggleFavorite = (id: number) => {
@@ -73,6 +83,63 @@ export default function Search() {
               placeholder="Search recipes..."
               placeholderTextColor="#94a3b8"
             />
+          </View>
+        </View>
+        <View className="flex-col flex-wrap gap-2">
+          <View className="flex-row items-center gap-1">
+            <Text style={[globalStyles.subtitle, { fontSize: 16 }]}>
+              Trending Searches
+            </Text>
+          </View>
+          <View className="flex-row gap-2 flex-wrap">
+            {trendingFoods.map((search) => (
+              <Pressable
+                key={search}
+                className={
+                  TrendingFoodsSelected === search
+                    ? "border border-red-500 bg-tansparent text-red-500 rounded-full px-4 py-2"
+                    : "border border-red-500 bg-gray-100 text-red-500 rounded-full px-4 py-2"
+                }
+                onPress={() => setTrendingFoodsSelected(search)}
+              >
+                <View className="flex-row items-center gap-1">
+                  <Ionicons name="flame" size={18} color="#e11d48" />
+                  <Text
+                    style={[
+                      globalStyles.subtitle,
+                      { fontSize: 16, color: "#e11d48" },
+                    ]}
+                  >
+                    {search}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
+          <View className="flex-row gap-2 flex-wrap">
+            {trendingTimes.map((search) => (
+              <Pressable
+                key={search}
+                className={
+                  TrendingTimeSelected === search
+                    ? "border border-gray-500 bg-gray-700 text-gray-500 rounded-full px-4 py-2"
+                    : "border border-gray-500 bg-transparent text-gray-500 rounded-full px-4 py-2"
+                }
+                onPress={() => setTrendingTimeSelected(search)}
+              >
+                <View className="flex-row items-center gap-2 px-2">
+                  <Ionicons name="time" size={18} color="#f9fafb" />
+                  <Text
+                    style={[
+                      globalStyles.subtitle,
+                      { fontSize: 16, color: "#f9fafb", marginTop: 1 },
+                    ]}
+                  >
+                    {search}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
           </View>
         </View>
         <View className="gap-4 py-4">
@@ -126,7 +193,7 @@ export default function Search() {
               {popularRecipes.length > 0 ? (
                 popularRecipes.map((recipe) => (
                   <View key={recipe.id}>
-                    <HorizontalCard.Touchable>
+                    <HorizontalCard href={`/recipe/${recipe.id}`}>
                       <HorizontalCard.Thumbnail source={recipe.image} />
                       <HorizontalCard.Content>
                         <HorizontalCard.Title>
@@ -148,7 +215,7 @@ export default function Search() {
                         isFavorite={favoriteIds.includes(recipe.id)}
                         onPress={() => toggleFavorite(recipe.id)}
                       />
-                    </HorizontalCard.Touchable>
+                    </HorizontalCard>
                   </View>
                 ))
               ) : (

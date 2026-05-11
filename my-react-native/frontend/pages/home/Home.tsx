@@ -115,7 +115,7 @@ export default function Home() {
           <Text style={globalStyles.subtitle} className="mb-4">
             Feature today
           </Text>
-          <Card.Touchable href="/recipe/1">
+          <Card.Touchable href={`/recipe/1`}>
             <Card.Image
               source={require("../../assets/images/sample-food.jpg")}
               className="h-56 w-full"

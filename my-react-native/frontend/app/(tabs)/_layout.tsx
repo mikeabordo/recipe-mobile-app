@@ -26,7 +26,7 @@ export default function TabLayout() {
       <View className="flex-row items-center justify-center py-4 border-t border-slate-700/50 bg-slate-900/20">
         <NavigationButton
           title="Home"
-          icon="home"
+          icon="home-outline"
           isActive={pathname === "/" || pathname === "/home"}
           onPress={() => router.push("/")}
         />
@@ -50,7 +50,7 @@ export default function TabLayout() {
         />
         <NavigationButton
           title="Profile"
-          icon="person"
+          icon="person-outline"
           isActive={pathname === "/profile"}
           onPress={() => router.push("/profile")}
         />

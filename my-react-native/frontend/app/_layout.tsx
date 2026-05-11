@@ -40,6 +40,16 @@ export default function RootLayout() {
       }}
     >
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen
+        name="recipe/[id]"
+        options={{
+          headerShown: true,
+          title: "Recipe Details",
+          headerStyle: { backgroundColor: "#323437" },
+          headerTintColor: "#f8fafc", // slate-50 text
+          headerShadowVisible: false, // removes the border below the header
+        }}
+      />
     </Stack>
   );
 }
